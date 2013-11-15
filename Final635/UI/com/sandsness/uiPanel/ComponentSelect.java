@@ -18,35 +18,34 @@ public class ComponentSelect extends JPanel
 	
 	
 	//Constructor with label only
-			public ComponentSelect(String label)
-			{
-				
-				// create panel and add label
-				this.setBackground(Color.CYAN);
-				this.add(label1);
-
-				this.add(theDropDown);//add dropdown list
+		public ComponentSelect(String label)
+		{
+			label1.setText(label);
+			// create panel and add label
+			this.setBackground(Color.CYAN);
+			this.add(label1);
+			this.add(theDropDown);//add dropdown list
 								
-			}//end constructor with parameters
+		}//end constructor with parameters
 	
 	
 	//Constructor with parameters
 		public ComponentSelect(String label, List populate)
 		{
-			
+			label1.setText(label);
 			// create panel and add label
 			this.setBackground(Color.CYAN);
 			this.add(label1);
 
-			for(int j = 0; j < populate.size(); j++)
-			{
-				theDropDown.addItem(populate.get(j));
-			}
+			setValues(populate);
 			
 			this.add(theDropDown);//add dropdown list
 			
 			
 		}//end constructor with parameters
+
+
+	
 
 //********GETTERS and SETTERS *****************
 //*******************************************************
@@ -67,8 +66,27 @@ public class ComponentSelect extends JPanel
 
 		public void setValues(List<String> values) 
 		{
+			//set attribute
 			this.values = values;
+			
+			//remove items from dropdown
+			
+			
+			//add values in dropdown
+			for(int i = 0; i < values.size(); i++)
+			{
+				theDropDown.addItem(values.get(i));
+			}
+						
 		}
+		
+//		public void monkeyMan(List populate) 
+//		{
+//			for(int j = 0; j < populate.size(); j++)
+//			{
+//				theDropDown.addItem(populate.get(j));
+//			}
+//		}
 	
 		public void addValue(String addString)
 		{
