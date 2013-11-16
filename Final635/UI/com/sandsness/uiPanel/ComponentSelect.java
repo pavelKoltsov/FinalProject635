@@ -17,7 +17,7 @@ public class ComponentSelect extends JPanel
 	private JLabel label1 = new JLabel("");
 	
 	
-	//Constructor with label only
+//	Constructor with label only
 		public ComponentSelect(String label)
 		{
 			label1.setText(label);
@@ -30,23 +30,20 @@ public class ComponentSelect extends JPanel
 	
 	
 	//Constructor with parameters
-		public ComponentSelect(String label, List populate)
-		{
-			label1.setText(label);
-			// create panel and add label
-			this.setBackground(Color.CYAN);
-			this.add(label1);
-
-			setValues(populate);
-			
-			this.add(theDropDown);//add dropdown list
-			
-			
-		}//end constructor with parameters
-
-
-	
-
+//		public ComponentSelect(String label, List populate)
+//		{
+//			label1.setText(label);
+//			// create panel and add label
+//			this.setBackground(Color.CYAN);
+//			this.add(label1);
+//
+//			setValues(populate);
+//			
+//			this.add(theDropDown);//add dropdown list
+//			
+//			
+//		}//end constructor with parameters
+		
 //********GETTERS and SETTERS *****************
 //*******************************************************
 		public String getLabel() 
@@ -94,18 +91,13 @@ public class ComponentSelect extends JPanel
 			
 		}
 
-		/**
-		 * @return the dropDownIndex
-		 */
 		public int getDropDownIndex()
 		{
 			dropDownIndex = theDropDown.getSelectedIndex();
 			return dropDownIndex;
 		}
 
-		/**
-		 * @param dropDownIndex the dropDownIndex to set
-		 */
+		
 		public void setDropDownIndex(int dropDownIndex)
 		{
 			this.dropDownIndex = dropDownIndex;

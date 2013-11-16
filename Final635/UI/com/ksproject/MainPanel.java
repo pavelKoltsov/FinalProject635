@@ -22,28 +22,24 @@ import textio.TextIO;
 import textio.TextIO.*;
 
 
-public class MainPanel extends JFrame
+public class MainPanel extends JFrame 
 {
 	
-	List<String> processorOptions	= new ArrayList<String>();
-	List<String> hardDriveOptions	= new ArrayList<String>();
-	List<String> memoryOptions 		= new ArrayList<String>();
-	List<String> chipSetOptions 	= new ArrayList<String>();
-	List<Integer> valuesSelected	= new ArrayList<Integer>();
+//	List<String> processorOptions	= new ArrayList<String>();
+//	List<String> hardDriveOptions	= new ArrayList<String>();
+//	List<String> memoryOptions 		= new ArrayList<String>();
+//	List<String> chipSetOptions 	= new ArrayList<String>();
+//	List<Integer> valuesSelected	= new ArrayList<Integer>();
 	
-	ComponentSelect processorSelect = new ComponentSelect("Processor", processorOptions);
-	ComponentSelect hardDriveSelect = new ComponentSelect("Hard Drive", hardDriveOptions);
-	ComponentSelect memorySelect = new ComponentSelect("Memory", hardDriveOptions);
-	ComponentSelect chipSetSelect = new ComponentSelect("Chipset", hardDriveOptions);
+	ComponentSelect processorSelect = new ComponentSelect("Processor");
+	ComponentSelect hardDriveSelect = new ComponentSelect("Hard Drive");
+	ComponentSelect memorySelect = new ComponentSelect("Memory");
+	ComponentSelect chipSetSelect = new ComponentSelect("Chipset");
 	
 	ComponentsSelected selected = new ComponentsSelected();
 	
 	
-	JButton button1 = new JButton();
-	
-	/**
-	 * @param args
-	 */
+//	JButton button1 = new JButton();
 	
 	//constructor
 	public MainPanel (String windowLabel)
@@ -51,30 +47,28 @@ public class MainPanel extends JFrame
 		
 		this.setTitle(windowLabel);
 		configureMainPanel();
-		button1.addActionListener(new ListenForButton());//add listener for button
+	//	button1.addActionListener(new ListenForButton());//add listener for button
 		
 	}//end constructor
 
-	
-	
 //**************************************************************************************************************************
-	private class ListenForButton implements ActionListener
-	{
-		
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			// TODO Auto-generated method stub
-			
-			selected.setProcessorSelect(processorSelect.getDropDownIndex());
-			selected.setHardDriveSelect(hardDriveSelect.getDropDownIndex());
-			selected.setChipSetSelect(chipSetSelect.getDropDownIndex());
-			selected.setMemorySelect(memorySelect.getDropDownIndex());
-			
-		
-		}//end method action performed
-		
-	}//end private class ListenForButton
+//	private class ListenForButton implements ActionListener
+//	{
+//		
+//		@Override
+//		public void actionPerformed(ActionEvent e)
+//		{
+//			// TODO Auto-generated method stub
+//			
+//			selected.setProcessorSelect(processorSelect.getDropDownIndex());
+//			selected.setHardDriveSelect(hardDriveSelect.getDropDownIndex());
+//			selected.setChipSetSelect(chipSetSelect.getDropDownIndex());
+//			selected.setMemorySelect(memorySelect.getDropDownIndex());
+//			
+//		
+//		}//end method action performed
+//		
+//	}//end private class ListenForButton
 
 //**************************************************************************************************************************
 //*******************methods****************************
@@ -102,10 +96,10 @@ public class MainPanel extends JFrame
 		mainPanel.add(chipSetSelect);
 				
 		// add button to panel
-		button1.setText("Generate Report");
+	//	button1.setText("Generate Report");
 		
 		this.add(mainPanel);
-		this.add(button1);
+	//	this.add(button1);
 		this.setLayout(new BoxLayout(rootPane, BoxLayout.Y_AXIS));
 		
 		//prepare
