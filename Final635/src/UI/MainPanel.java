@@ -1,24 +1,17 @@
 package UI;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JComboBox;
-
 import backend.InputHandler;
 
+@SuppressWarnings("serial")
 public class MainPanel extends JFrame {
 
 	ComponentSelect processorSelect = new ComponentSelect("Processor");
@@ -32,11 +25,10 @@ public class MainPanel extends JFrame {
 
 		this.setTitle(windowLabel);
 		configureMainPanel();
-		button1.addActionListener(new ListenForButton());// add listener for															// button
-
+		button1.addActionListener(new ListenForButton());// add listener for															
+		//
 	}// end constructor
 
-	// **************************************************************************************************************************
 	private class ListenForButton implements ActionListener {
 
 		@Override
@@ -45,6 +37,7 @@ public class MainPanel extends JFrame {
 			try {
 				input.setProcessor(processorSelect.getDropDownIndex() + 1);
 				input.setHardDrive(hardDriveSelect.getDropDownIndex() + 1);
+				input.setMemory(memorySelect.getDropDownIndex() + 1);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}

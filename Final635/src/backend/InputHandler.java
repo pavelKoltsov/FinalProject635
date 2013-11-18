@@ -1,7 +1,6 @@
 package backend;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class InputHandler {
 
@@ -10,10 +9,10 @@ public class InputHandler {
 	private static Statement statement;
 	private static ResultSet resultset;
 	private static CompSystem computer;
-	
-public void setProcessor(int index) throws SQLException {
-				
-		int key = index;
+	private Recommendation r = new Recommendation();
+
+	public void setProcessor(int index) throws SQLException {
+
 		String desc;
 		int score;
 		String skt;
@@ -24,7 +23,7 @@ public void setProcessor(int index) throws SQLException {
 		statement = connection.createStatement();
 		resultset = statement
 				.executeQuery("SELECT description,benchmark_score,"
-						+ "socket FROM processors where id =" + key + "");
+						+ "socket FROM processors where id =" + index + "");
 
 		if (resultset.next()) {
 			desc = resultset.getString(1);
@@ -50,55 +49,19 @@ public void setProcessor(int index) throws SQLException {
 					"Your processor has %.2f overall rating on 0 to 100 scale",
 					p.getRating());
 			System.out.println();
-
-		getAvailableProcessors(score, skt);
+			r.setRecommendedProcessors(score, skt, connection, statement);
 		}
-
 	}
-
-	private static void getAvailableProcessors(int score, String socket)
-			throws SQLException {
-
-		ArrayList<Processor> upgrade = new ArrayList<Processor>();
-		Statement statement = connection.createStatement();
-		Recommendation r = new Recommendation();
-		resultset = statement
-				.executeQuery("SELECT description,benchmark_score,"
-						+ "socket FROM processors where socket = '" + socket
-						+ "'AND benchmark_score > " + score + "");
-
-		while (resultset.next()) {
-			String description = resultset.getString(1);
-			int bscore = resultset.getInt(2);
-			String skt = resultset.getString(3);
-
-			Processor p = new Processor(description, bscore, skt);
-			upgrade.add(p);
-		}
-
-		r.setRecommended(upgrade);
-		System.out.println();
-		System.out.println("Here are the processors you can use for upgrade:");
-		System.out.println();
-		for (int i = 0; i < r.getRecommendedProcessor().size(); i++)
-			System.out.println(r.getRecommendedProcessor().get(i).getDescription());
-		System.out.println();
-	}
-
+	
 	public void setHardDrive(int index) throws SQLException {
-		
-		int key = index;
+
 		String desc;
 		int score = 0;
 		int maxScore = 0;
-		int size;
-
-		connection = DriverManager
-				.getConnection(DATABASE_URL, "Pavel", "12345");
-		statement = connection.createStatement();
+		int size;		
 		resultset = statement
 				.executeQuery("SELECT description,benchmark_rating,"
-						+ "capacity FROM hard_drive where id =" + key + "");
+						+ "capacity FROM hard_drive where id =" + index + "");
 
 		if (resultset.next()) {
 			desc = resultset.getString(1);
@@ -124,42 +87,41 @@ public void setProcessor(int index) throws SQLException {
 							hd.getRating());
 			System.out.println();
 		}
-		getAvailableHardDrives(score);
+		r.setRecommendedHardDrives(score, connection, statement);
 	}
 
-	private static void getAvailableHardDrives(float score) throws SQLException {
+	public void setMemory(int index) throws SQLException {
 
-		
-		ArrayList<HardDrive> upgrade = new ArrayList<HardDrive>();
-		Statement statement = connection.createStatement();
-		Recommendation r = new Recommendation();
-		
-		resultset = statement
-				.executeQuery("SELECT description,benchmark_rating,"
-						+ "capacity FROM hard_drive where benchmark_rating >"
-						+ score  + "");
+		String desc;
+		int speed = 0;
+		int maxScore = 0;
+		int capacity;
 
-		while (resultset.next()) {
-			String description = resultset.getString(1);
-			int bscore = resultset.getInt(2);
-			int capacity = resultset.getInt(3);
+		resultset = statement.executeQuery("SELECT description,volume,"
+				+ "speed FROM memory where id =" + index + "");
 
-			HardDrive hd = new HardDrive(description, bscore, capacity);
-			upgrade.add(hd);
+		if (resultset.next()) {
+			desc = resultset.getString(1);
+			capacity = resultset.getInt(2);
+			speed = resultset.getInt(3);
+			resultset = statement.executeQuery("SELECT MAX(speed) FROM memory");
+			if (resultset.next())
+				maxScore = resultset.getInt(1);
+
+			System.out.println("Your memory is");
+			System.out.println(desc);
+			System.out.println();
+
+			Memory mem = new Memory(desc, capacity, speed);
+			mem.setMaxScore(maxScore);
+			mem.setRating();
+			computer.setMemory(mem);
+
+			System.out.printf(
+					"Your memory has %.2f overall rating on 0 to 100 scale",
+					mem.getRating());
+			System.out.println();
 		}
-		r.setRecommendedHardDrives(upgrade);
-		
-		System.out.println();
-
-		System.out.println("Here are the hard drives you can use for upgrade:");
-		System.out.println();
-
-		for (int i = 0; i < r.getRecommendedHardDrives().size(); i++)
-			System.out.println(r.getRecommendedHardDrives().get(i)
-					.getDescription());
-		System.out.println();
+		r.setRecommendedMemory(speed, connection, statement);
 	}
-
-	}
-
-
+}

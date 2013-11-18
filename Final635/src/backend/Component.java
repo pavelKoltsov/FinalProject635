@@ -1,10 +1,11 @@
 package backend;
+
 public abstract class Component {
 
 	int benchmarkScore;
 	String description;
 	static int maxScore;
-	int tier;
+	// int tier;
 	float rating;
 
 	public abstract String getDescription();
