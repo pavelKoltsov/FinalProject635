@@ -124,4 +124,9 @@ public class InputHandler {
 		}
 		r.setRecommendedMemory(speed, connection, statement);
 	}
+
+	public void setChipset(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 }
