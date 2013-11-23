@@ -9,16 +9,17 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import backend.InputHandler;
+
+import controller.InputHandler;
+import controller.MySQLHandler;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JFrame {
 
-	ComponentSelect processorSelect = new ComponentSelect("Processor");
+	static ComponentSelect processorSelect = new ComponentSelect("Processor");
 	ComponentSelect hardDriveSelect = new ComponentSelect("Hard Drive");
 	ComponentSelect memorySelect = new ComponentSelect("Memory");
 	static ComponentSelect chipSetSelect = new ComponentSelect("Chipset");
-
 	JButton button1 = new JButton();
 
 	// constructor
@@ -35,13 +36,15 @@ public class MainPanel extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			InputHandler input = new InputHandler();
-
+			InputHandler input = new MySQLHandler();
+			
+			String s = (String) chipSetSelect.theDropDown.getSelectedItem();
+		
+			processorSelect.pholder.getIndexSelected(s);
 			try {
-				input.setProcessor(processorSelect.getDropDownIndex() + 1);
+				input.setProcessor(processorSelect.getDropDownIndex() + 1, processorSelect.pholder.getId());
 				input.setHardDrive(hardDriveSelect.getDropDownIndex() + 1);
 				input.setMemory(memorySelect.getDropDownIndex() + 1);
-				input.setChipset(chipSetSelect.getDropDownIndex() + 1);
 
 			} catch (SQLException e1) {
 				e1.printStackTrace();

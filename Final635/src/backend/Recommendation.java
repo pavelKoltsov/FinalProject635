@@ -20,11 +20,13 @@ public class Recommendation {
 	}
 
 	public void setRecommendedProcessors(int score, String socket,
-			Connection connection, Statement statement) throws SQLException {
+			int indexChipset, Connection connection, Statement statement) throws SQLException {
 		resultset = statement
-				.executeQuery("SELECT description,benchmark_score,"
-						+ "socket FROM processors where socket = '" + socket
-						+ "'AND benchmark_score > " + score + "");
+				.executeQuery("SELECT processors.description, benchmark_score, socket" +
+						" FROM processors inner join  "
+							+ " chipset_processor on chipset_processor.procid = processors.id "
+							+ "inner join chipsets on chipset_processor.chipid = chipsets.id where (processors.socket = '" + socket
+						+ "' AND chipsets.id = " + indexChipset + " AND processors.benchmark_score > " + score + ");");
 
 		while (resultset.next()) {
 			String description = resultset.getString(1);
@@ -92,6 +94,18 @@ public class Recommendation {
 		for (int i = 0; i < recommendedMemory.size(); i++)
 			System.out.println(recommendedMemory.get(i).getDescription());
 		System.out.println();
+		
+		
+	}
+
+	public void setSystemRating(List<Component> list) {
+		
+		float total = 0;
+		for(int i = 0; i < list.size();i++)
+			total = total + list.get(i).getRating();
+		float rating = total / list.size();
+		
+		System.out.printf("Your overall system rating is %.2f\n on 0 to 100 scale", rating);
 	}
 
 	public List<Memory> getRecommendedMemory() {

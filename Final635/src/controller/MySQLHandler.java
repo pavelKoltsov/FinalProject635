@@ -1,8 +1,15 @@
-package backend;
+package controller;
 
 import java.sql.*;
 
-public class InputHandler {
+import backend.CompSystem;
+import backend.Component;
+import backend.HardDrive;
+import backend.Memory;
+import backend.Processor;
+import backend.Recommendation;
+
+public class MySQLHandler implements InputHandler {
 
 	static final String DATABASE_URL = "jdbc:mysql://localhost/compsystem";
 	private static Connection connection;
@@ -11,19 +18,20 @@ public class InputHandler {
 	private static CompSystem computer;
 	private Recommendation r = new Recommendation();
 
-	public void setProcessor(int index) throws SQLException {
+	public void setProcessor(int indexProcessor, int indexChipset) throws SQLException {
 
 		String desc;
 		int score;
 		String skt;
 		int maxScore = 0;
+		int minScore = 0;
 
 		connection = DriverManager
 				.getConnection(DATABASE_URL, "Pavel", "12345");
 		statement = connection.createStatement();
 		resultset = statement
 				.executeQuery("SELECT description,benchmark_score,"
-						+ "socket FROM processors where id =" + index + "");
+						+ "socket FROM processors where id =" + indexProcessor + "");
 
 		if (resultset.next()) {
 			desc = resultset.getString(1);
@@ -31,25 +39,34 @@ public class InputHandler {
 			skt = resultset.getString(3);
 
 			resultset = statement
-					.executeQuery("SELECT MAX(benchmark_score) FROM processors where socket = '"
-							+ skt + "'");
+					.executeQuery("SELECT MAX(benchmark_score) FROM processors inner join  "
+							+ " chipset_processor on chipset_processor.procid = processors.id "
+							+ "inner join chipsets on chipset_processor.chipid = chipsets.id where processors.socket = '"
+							+ skt + "'AND chipsets.id = "+ indexChipset +";");
 			if (resultset.next())
 				maxScore = resultset.getInt(1);
-
+			resultset = statement
+					.executeQuery("SELECT MIN(benchmark_score) FROM processors inner join  "
+							+ " chipset_processor on chipset_processor.procid = processors.id "
+							+ "inner join chipsets on chipset_processor.chipid = chipsets.id where processors.socket = '"
+							+ skt + "'AND chipsets.id = "+ indexChipset +";");
+			if (resultset.next())
+				minScore = resultset.getInt(1);
 			System.out.println("Your processor is");
 			System.out.println(desc);
 			System.out.println();
 
 			computer = new CompSystem();
-			Processor p = new Processor(desc, score, skt);
+			Component p = new Processor(desc, score, skt);
 			p.setMaxScore(maxScore);
-			p.setRating();
+			p.setMinScore(minScore);
+			p.setRating(score);
 			computer.setProcessor(p);
 			System.out.printf(
 					"Your processor has %.2f overall rating on 0 to 100 scale",
 					p.getRating());
 			System.out.println();
-			r.setRecommendedProcessors(score, skt, connection, statement);
+			r.setRecommendedProcessors(score, skt, indexChipset, connection, statement);
 		}
 	}
 	
@@ -77,9 +94,15 @@ public class InputHandler {
 			System.out.println(desc);
 			System.out.println();
 
-			HardDrive hd = new HardDrive(desc, score, size);
+			Component hd = new HardDrive(desc, score, size);
 			hd.setMaxScore(maxScore);
-			hd.setRating();
+			resultset = statement
+					.executeQuery("SELECT MIN(benchmark_rating) FROM hard_drive");
+			int minScore = 0;
+			if (resultset.next())
+				minScore = resultset.getInt(1);
+			hd.setMinScore(minScore);
+			hd.setRating(score);
 			computer.setHardDrive(hd);
 
 			System.out
@@ -112,21 +135,25 @@ public class InputHandler {
 			System.out.println(desc);
 			System.out.println();
 
-			Memory mem = new Memory(desc, capacity, speed);
+			Component mem = new Memory(desc, capacity, speed);
 			mem.setMaxScore(maxScore);
-			mem.setRating();
+			resultset = statement.executeQuery("SELECT MIN(speed) FROM memory");
+			int minScore = 0;
+			if (resultset.next())
+				minScore = resultset.getInt(1);
+			mem.setMinScore(minScore);
+			mem.setRating(speed);
 			computer.setMemory(mem);
 
 			System.out.printf(
 					"Your memory has %.2f overall rating on 0 to 100 scale",
 					mem.getRating());
 			System.out.println();
-		}
+		 }
 		r.setRecommendedMemory(speed, connection, statement);
+		computer.setRating();
+	   }
+
+
 	}
 
-	public void setChipset(int i) {
-		// TODO Auto-generated method stub
-		
-	}
-}

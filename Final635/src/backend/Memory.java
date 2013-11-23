@@ -30,4 +30,10 @@ public class Memory extends Component {
 		maxScore = mxScore;
 	}
 
+	@Override
+	public void setMinScore(int mnScore) {
+		minScore = mnScore;
+		
+	}
+
 }

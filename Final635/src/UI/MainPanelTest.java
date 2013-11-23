@@ -10,7 +10,7 @@ import java.util.List;
 
 import UI.MainPanel;
 
-public class MainPanelTest {
+public class MainPanelTest implements DBtype{
 	static final String DATABASE_URL = "jdbc:mysql://localhost/compsystem";
 	private static Connection connection;
 	private static Statement statement;
@@ -50,14 +50,15 @@ public class MainPanelTest {
 			memoryDropdown.add(desc);
 		}
 
-		testMainPanel.processorSelect.setValues(processorsDropdown);
+		MainPanel.processorSelect.setValues(processorsDropdown);
 		testMainPanel.memorySelect.setValues(memoryDropdown);
 		testMainPanel.hardDriveSelect.setValues(hdDropdown);
-		testMainPanel.processorSelect.initialValues();		
-		MainPanel.chipSetSelect.setValues(testMainPanel.processorSelect.getPlaceholder());
-        testMainPanel.processorSelect.setDropDownIndex();
-   
+		MainPanel.processorSelect.initialValues();		
+		MainPanel.chipSetSelect.setValues(testMainPanel.processorSelect.getPlaceholderChipset());
+	
 		testMainPanel.setSize(800, 250);
+        MainPanel.processorSelect.setDropDownIndex();
+     
 	}
 
 		}

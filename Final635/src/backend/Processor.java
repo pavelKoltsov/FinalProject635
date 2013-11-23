@@ -33,4 +33,10 @@ public class Processor extends Component {
 	public void setMaxScore(int mxScore) {
 		maxScore = mxScore;
 	}
+
+	@Override
+	public void setMinScore(int mnScore) {
+		minScore = mnScore;
+		
+	}
 }

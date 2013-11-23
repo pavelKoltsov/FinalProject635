@@ -1,32 +1,45 @@
 package backend;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class CompSystem {
 
-	private Processor p;
-	private HardDrive hd;
-	private Memory memory;
+	
+	private List<Component>parts = new ArrayList <Component>();
+	private float rating;
 
-	public Processor getProcessor() {
-		return p;
+
+	public float getRating() {
+		return rating;
 	}
 
-	public Memory getMemory() {
-		return memory;
+
+	public void setRating() {
+		float total = 0;
+		for(int i = 0; i < parts.size();i++)
+			total = total + parts.get(i).getRating();
+		float rating = total / parts.size();
+		
+		System.out.printf("Your overall system rating is %.2f\n on 0 to 100 scale", rating);
 	}
 
-	public void setMemory(Memory mem) {
-		memory = mem;
+
+	public List <Component> getParts() {
+		return parts;
 	}
 
-	public void setProcessor(Processor p1) {
-		p = p1;
+
+	public void setMemory(Component mem) {
+		parts.add(mem);
 	}
 
-	public void setHardDrive(HardDrive hd1) {
-		hd = hd1;
+	public void setProcessor(Component p2) {
+		parts.add(p2);
 	}
 
-	public HardDrive getHardDrive() {
-		return hd;
+	public void setHardDrive(Component hd2) {
+		parts.add(hd2);
 	}
+
 }

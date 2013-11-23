@@ -33,5 +33,10 @@ public class HardDrive extends Component {
 		return capacity;
 	}
 
+	@Override
+	public void setMinScore(int mnScore) {
+	    minScore = mnScore;		
+	}
+
 }
 
