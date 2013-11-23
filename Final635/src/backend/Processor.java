@@ -1,42 +1,44 @@
 package backend;
 
-public class Processor extends Component {
+public class Processor implements Component {
 
 	private String socket;
-
+	private ComponentImpl implement;
+	
 	public Processor(String desc, int score, String skt) {
 		socket = skt;
-		benchmarkScore = score;
-		description = desc;
+		implement = new ComponentImpl(desc, score);
 	}
-
+	
 	@Override
 	public String getDescription() {
-		return description;
-	}
 
-	public String getSocket() {
-		return socket;
-	}
-
-	public int getBenchmarkScore() {
-		return benchmarkScore;
+		return implement.getDescription();
 	}
 
 	@Override
 	public float getRating() {
-
-		return rating;
+		return implement.getRating();
 	}
 
 	@Override
 	public void setMaxScore(int mxScore) {
-		maxScore = mxScore;
+		implement.setMaxScore(mxScore);
+		
 	}
 
 	@Override
 	public void setMinScore(int mnScore) {
-		minScore = mnScore;
+		implement.setMinScore(mnScore);
 		
+	}
+ 
+	public void setRating(int currentScore) {
+		implement.setRating(currentScore);
+	}
+	
+
+	public String getSocket() {
+		return socket;
 	}
 }

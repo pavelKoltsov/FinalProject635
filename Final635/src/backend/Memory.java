@@ -1,39 +1,46 @@
 package backend;
 
-public class Memory extends Component {
+public class Memory implements Component {
 
 	private int volume;
+	private ComponentImpl implement;
 
-	public int getVolume() {
-		return volume;
-	}
 
-	public Memory(String desc, int capacity, int speed) {
-		description = desc;
+	public Memory(String desc,int capacity, int speed) {
+		
+		implement = new ComponentImpl(desc, speed);
 		volume = capacity;
-		benchmarkScore = speed;
+		
 	}
 
 	@Override
 	public String getDescription() {
 
-		return description;
+		return implement.getDescription();
 	}
 
 	@Override
 	public float getRating() {
-		return rating;
+		return implement.getRating();
 	}
 
 	@Override
 	public void setMaxScore(int mxScore) {
-		maxScore = mxScore;
+		implement.setMaxScore(mxScore);
+		
 	}
 
 	@Override
 	public void setMinScore(int mnScore) {
-		minScore = mnScore;
+		implement.setMinScore(mnScore);
 		
 	}
-
+ 
+	public int getVolume() {
+		return volume;
+	}
+	
+	public void setRating(int currentScore) {
+		implement.setRating(currentScore);
+	}
 }

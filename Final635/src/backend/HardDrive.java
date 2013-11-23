@@ -1,32 +1,30 @@
 package backend;
 
-public class HardDrive extends Component {
+public class HardDrive implements Component {
 
 	private int capacity;
+	private ComponentImpl implement;
 
 	public HardDrive(String desc, int score, int size) {
 
-		description = desc;
-		int bench = score;
-		benchmarkScore = (int) bench;
+	    implement = new ComponentImpl(desc, score);
 		capacity = size;
 	}
 
-	@Override
 	public String getDescription() {
 
-		return description;
+		return implement.getDescription();
 	}
 
 	@Override
 	public float getRating() {
 
-		return rating;
+		return implement.getRating();
 	}
 
 	@Override
 	public void setMaxScore(int mxScore) {
-		maxScore = mxScore;
+		implement.setMaxScore(mxScore);
 	}
 
 	public int getCapacity() {
@@ -35,8 +33,11 @@ public class HardDrive extends Component {
 
 	@Override
 	public void setMinScore(int mnScore) {
-	    minScore = mnScore;		
+	  implement.setMinScore(mnScore);	
 	}
 
+	public void setRating(int currentScore) {
+		implement.setRating(currentScore);
+	}
 }
 
