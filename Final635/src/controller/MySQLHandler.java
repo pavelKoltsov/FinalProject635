@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.*;
 
+import UI.Display;
 import backend.CompSystem;
 import backend.Component;
 import backend.HardDrive;
@@ -17,7 +18,6 @@ public class MySQLHandler implements InputHandler {
 	private static ResultSet resultset;
 	private static CompSystem computer;
 	private Recommendation r = new Recommendation();
-
 	public void setProcessor(int indexProcessor, int indexChipset) throws SQLException {
 
 		String desc;
@@ -152,8 +152,8 @@ public class MySQLHandler implements InputHandler {
 		 }
 		r.setRecommendedMemory(speed, connection, statement);
 		computer.setRating();
+		new Display(computer, r);
 	   }
-
-
+   
 	}
 
