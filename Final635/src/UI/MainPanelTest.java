@@ -15,12 +15,11 @@ public class MainPanelTest implements DBtype{
 	private static Connection connection;
 	private static Statement statement;
 	private static ResultSet resultset;
-	MainPanel testMainPanel = new MainPanel("test");
+	MainPanel testMainPanel = new MainPanel("Hardware Upgrade Application");
 	
 	public void showPanel() throws SQLException {
 
-		
-		
+	
 		// create array lists and populate with values
 		List<String> processorsDropdown = new ArrayList<String>();
 		List<String> hdDropdown = new ArrayList<String>();
@@ -55,16 +54,10 @@ public class MainPanelTest implements DBtype{
 		testMainPanel.memorySelect.setValues(memoryDropdown);
 		testMainPanel.hardDriveSelect.setValues(hdDropdown);
 		MainPanel.processorSelect.initialValues();		
-		MainPanel.chipSetSelect.setValues(testMainPanel.processorSelect.getPlaceholderChipset());
-		
-    	testMainPanel.setSize(800, 250);
-	//	testMainPanel.setItself(testMainPanel);
+		MainPanel.chipSetSelect.setValues(MainPanel.processorSelect.getPlaceholderChipset());		
+    	testMainPanel.setSize(650, 350);
         MainPanel.processorSelect.setDropDownIndex();
         
-	}
-
-	public void output(){
-	 testMainPanel.configureOutput();
 	}
 		}
 	

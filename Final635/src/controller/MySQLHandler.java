@@ -52,9 +52,6 @@ public class MySQLHandler implements InputHandler {
 							+ skt + "'AND chipsets.id = "+ indexChipset +";");
 			if (resultset.next())
 				minScore = resultset.getInt(1);
-			System.out.println("Your processor is");
-			System.out.println(desc);
-			System.out.println();
 
 			computer = new CompSystem();
 			Component p = new Processor(desc, score, skt);
@@ -62,10 +59,6 @@ public class MySQLHandler implements InputHandler {
 			p.setMinScore(minScore);
 			p.setRating(score);
 			computer.setProcessor(p);
-			System.out.printf(
-					"Your processor has %.2f overall rating on 0 to 100 scale",
-					p.getRating());
-			System.out.println();
 			r.setRecommendedProcessors(score, skt, indexChipset, connection, statement);
 		}
 	}
@@ -89,11 +82,7 @@ public class MySQLHandler implements InputHandler {
 					.executeQuery("SELECT MAX(benchmark_rating) FROM hard_drive");
 			if (resultset.next())
 				maxScore = resultset.getInt(1);
-
-			System.out.println("Your hard drive is");
-			System.out.println(desc);
-			System.out.println();
-
+			
 			Component hd = new HardDrive(desc, score, size);
 			hd.setMaxScore(maxScore);
 			resultset = statement
@@ -104,11 +93,6 @@ public class MySQLHandler implements InputHandler {
 			hd.setMinScore(minScore);
 			hd.setRating(score);
 			computer.setHardDrive(hd);
-
-			System.out
-					.printf("Your hard drive has %.2f overall rating on 0 to 100 scale",
-							hd.getRating());
-			System.out.println();
 		}
 		r.setRecommendedHardDrives(score, connection, statement);
 	}
@@ -131,10 +115,6 @@ public class MySQLHandler implements InputHandler {
 			if (resultset.next())
 				maxScore = resultset.getInt(1);
 
-			System.out.println("Your memory is");
-			System.out.println(desc);
-			System.out.println();
-
 			Component mem = new Memory(desc, capacity, speed);
 			mem.setMaxScore(maxScore);
 			resultset = statement.executeQuery("SELECT MIN(speed) FROM memory");
@@ -144,11 +124,6 @@ public class MySQLHandler implements InputHandler {
 			mem.setMinScore(minScore);
 			mem.setRating(speed);
 			computer.setMemory(mem);
-
-			System.out.printf(
-					"Your memory has %.2f overall rating on 0 to 100 scale",
-					mem.getRating());
-			System.out.println();
 		 }
 		r.setRecommendedMemory(speed, connection, statement);
 		computer.setRating();

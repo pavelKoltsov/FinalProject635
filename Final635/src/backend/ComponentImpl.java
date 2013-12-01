@@ -30,10 +30,9 @@ public class ComponentImpl implements Component{
 	public void setRating(int currentScore) {
 		int range = maxScore - minScore;
 		int scale = currentScore - minScore;
-		System.out.println(currentScore);
-		System.out.println(minScore);
-		System.out.println(scale);
 		rating = ((float)scale / range) * 100;
+		rating = (float) (Math.round(rating * 100.0) / 100.0);
+		System.out.println(rating);
 		
 	}
 }

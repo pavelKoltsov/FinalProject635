@@ -19,9 +19,8 @@ public final class CompSystem {
 		float total = 0;
 		for(int i = 0; i < parts.size();i++)
 			total = total + parts.get(i).getRating();
-		float rating = total / parts.size();
-		
-		System.out.printf("Your overall system rating is %.2f\n on 0 to 100 scale", rating);
+	    rating = total / parts.size();
+	    rating = (float) (Math.round(rating * 100.0)/100.0);
 	}
 
 

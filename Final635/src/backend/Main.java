@@ -9,6 +9,5 @@ public class Main {
 
 		MainPanelTest mp = new MainPanelTest();
 		mp.showPanel();
-//	mp.output();
 	}
 }

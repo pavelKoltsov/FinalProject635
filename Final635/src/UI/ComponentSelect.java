@@ -33,7 +33,7 @@ public class ComponentSelect extends JPanel implements DBtype{
 	// Constructor
 	public ComponentSelect(String label) {
 		label1.setText(label);// create panel and add label
-		this.setBackground(Color.CYAN);
+		this.setBackground(Color.lightGray);
 		this.add(label1);
 		this.add(theDropDown);// add dropdown list
 
@@ -75,7 +75,6 @@ public class ComponentSelect extends JPanel implements DBtype{
 						int id = resultset.getInt(2);
 						chipsetDropdown.add(desc);
 						indexes.add(id);
-						System.out.println();
 					}
 					getDescChosen(chipsetDropdown,indexes);
 				}
